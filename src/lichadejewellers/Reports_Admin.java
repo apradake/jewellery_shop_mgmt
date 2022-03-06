@@ -290,13 +290,16 @@ public class Reports_Admin extends javax.swing.JFrame {
      AdvancedDb2ExcelExporter report = new AdvancedDb2ExcelExporter();
      
      try
-     {report.export("final_invoice",report_From_Date , report_To_Date );
-     JOptionPane.showMessageDialog(null, "Reports are generated, Please check directory");
+     {
+     report.export("final_invoice",report_From_Date , report_To_Date );
+     report.exportGST("final_invoice", report_From_Date, report_To_Date);
+     JOptionPane.showMessageDialog(null, "Invoices are exported,Please check directory");
+      JOptionPane.showMessageDialog(null, "GST Detailes are exported");
      }
      catch( Exception e) 
      { 
-       JOptionPane.showMessageDialog(null, "Reports generation Failed");  
-         e.printStackTrace();
+       JOptionPane.showMessageDialog(null, "Invoice or GST export failed");  
+       e.printStackTrace();
      }
         
         

@@ -43,7 +43,7 @@ public class AdvancedDb2ExcelExporter {
     {
        
  
-        String excelFilePath = "D:\\"+getFileName(table.concat("_Export"));
+        String excelFilePath = "D:\\Revenue_"+getFileName(table.concat("_Export"));
  
         try {
             Connection cons= ConnectionProvider.getCon();
@@ -62,6 +62,45 @@ public class AdvancedDb2ExcelExporter {
  
             writeDataLines(result, workbook, sheet);
  
+            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+            workbook.write(outputStream);
+            workbook.close();
+ 
+            statement.close();
+ 
+        } catch (SQLException e) {
+            System.out.println("Datababse error:");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("File IO error:");
+            e.printStackTrace();
+        }
+    }
+    
+    
+     public void exportGST(String table, java.sql.Date from_date, java.sql.Date to_date )
+    {
+       
+ 
+        String excelFilePath = "D:\\GST_"+getFileName(table.concat("_Export"));
+ 
+        try {
+            Connection cons= ConnectionProvider.getCon();
+            
+            String sql = "select sum(invoice_bill_amount), sum(invoice_gst_paid) from ".concat(table)+ " where invoice_billing_date between "+"'"+from_date+"'"+" and "+"'"+to_date+"'"; 
+ 
+         //   System.out.println(sql);
+            Statement statement = cons.createStatement();
+ 
+            ResultSet result = statement.executeQuery(sql);
+ 
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet(table);
+ 
+            writeHeaderLine(result, sheet);
+ 
+            writeDataLines(result, workbook, sheet);
+            
             FileOutputStream outputStream = new FileOutputStream(excelFilePath);
             workbook.write(outputStream);
             workbook.close();
