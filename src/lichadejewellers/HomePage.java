@@ -80,7 +80,7 @@ public class HomePage extends javax.swing.JFrame {
         reports_button.setBackground(new java.awt.Color(8, 40, 75));
         reports_button.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         reports_button.setForeground(new java.awt.Color(255, 255, 255));
-        reports_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-financial-60.png"))); // NOI18N
+        reports_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-online-60.png"))); // NOI18N
         reports_button.setText("REPORTS");
         reports_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,13 +91,13 @@ public class HomePage extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(8, 40, 75));
         jButton3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-approval-48.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-approval-48.png"))); // NOI18N
         jButton3.setText("VERIFY INVOICE");
 
         add_new_product_button.setBackground(new java.awt.Color(8, 40, 75));
         add_new_product_button.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         add_new_product_button.setForeground(new java.awt.Color(255, 255, 255));
-        add_new_product_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-add-tag-48.png"))); // NOI18N
+        add_new_product_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-add-tag-48.png"))); // NOI18N
         add_new_product_button.setText("ADD PRODUCT");
         add_new_product_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +108,7 @@ public class HomePage extends javax.swing.JFrame {
         Sale_button.setBackground(new java.awt.Color(8, 40, 75));
         Sale_button.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         Sale_button.setForeground(new java.awt.Color(255, 255, 255));
-        Sale_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-gold-64.png"))); // NOI18N
+        Sale_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-gold-64(1).png"))); // NOI18N
         Sale_button.setText("SALE");
         Sale_button.setToolTipText("");
         Sale_button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
