@@ -43,7 +43,7 @@ public class AdvancedDb2ExcelExporter {
     {
        
  
-        String excelFilePath = "D:\\Revenue_"+getFileName(table.concat("_Export"));
+        String excelFilePath = "dist\\Revenue_"+getFileName(table.concat("_Export"));
  
         try {
             Connection cons= ConnectionProvider.getCon();
@@ -82,7 +82,7 @@ public class AdvancedDb2ExcelExporter {
     {
        
  
-        String excelFilePath = "D:\\GST_"+getFileName(table.concat("_Export"));
+        String excelFilePath = "dist\\GST_"+getFileName(table.concat("_Export"));
  
         try {
             Connection cons= ConnectionProvider.getCon();
@@ -98,7 +98,8 @@ public class AdvancedDb2ExcelExporter {
             XSSFSheet sheet = workbook.createSheet(table);
  
             writeHeaderLine(result, sheet);
- 
+                  
+            
             writeDataLines(result, workbook, sheet);
             
             FileOutputStream outputStream = new FileOutputStream(excelFilePath);
@@ -124,7 +125,7 @@ public class AdvancedDb2ExcelExporter {
  
         Row headerRow = sheet.createRow(0);
  
-        // exclude the first column which is the ID field
+      
         for (int i = 1; i <= numberOfColumns; i++) {
             String columnName = metaData.getColumnName(i);
             Cell headerCell = headerRow.createCell(i - 1);

@@ -576,6 +576,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Reset Bill"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Reset_billActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="print_invoice_generate_pdf">
           <Properties>

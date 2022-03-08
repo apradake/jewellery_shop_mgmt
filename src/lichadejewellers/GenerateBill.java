@@ -316,6 +316,11 @@ public class GenerateBill extends javax.swing.JFrame
         Reset_bill.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Reset_bill.setForeground(new java.awt.Color(255, 255, 255));
         Reset_bill.setText("Reset Bill");
+        Reset_bill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Reset_billActionPerformed(evt);
+            }
+        });
 
         print_invoice_generate_pdf.setBackground(new java.awt.Color(0, 119, 182));
         print_invoice_generate_pdf.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -741,6 +746,11 @@ public class GenerateBill extends javax.swing.JFrame
        new HomePage().setVisible(true);
        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void Reset_billActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reset_billActionPerformed
+        new GenerateBill().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_Reset_billActionPerformed
 
     /**
      * @param args the command line arguments

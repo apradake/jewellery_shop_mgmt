@@ -343,12 +343,13 @@ public class HomePage extends javax.swing.JFrame {
          
         if (!price_updation_gold_24k.getText().equals("") && !price_updation_gold_22k.getText().equals("") && !price_updation_silver.getText().equals(""))
         {
-        int Gold24k= Integer.parseInt(price_updation_gold_24k.getText());         
-        int Gold22k= Integer.parseInt(price_updation_gold_22k.getText());        
-        int SILVER=  Integer.parseInt(price_updation_silver.getText());
+        float Gold24k= Float.parseFloat(price_updation_gold_24k.getText());         
+        float Gold22k= Float.parseFloat(price_updation_gold_22k.getText());        
+        float SILVER=  Float.parseFloat(price_updation_silver.getText());
             
         // Getting secret key
-        int SECRET_KEY=0;       
+        int SECRET_KEY=0;    
+        
         if (jPasswordField1.getText().length()==0 && jPasswordField1.getText().equals(""))
         {
             JOptionPane.showMessageDialog(null, "Please provide secret key");
