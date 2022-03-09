@@ -36,7 +36,10 @@ public class GenerateBill extends javax.swing.JFrame
      DefaultListModel<String> list_product_individual_amount;
      DefaultListModel<String> list_product_individual_name;
      float Gold24K_pergrams=0; float Gold22k_pergrams=0; float Silver_pergrams=0;
-     int bill_counter_for_the_invoice=1000;
+     
+     ResultSet rs= null;
+     int bill_counter_for_the_invoice;
+     
      float Gold24K;
      float Gold22K;
      float SILVER_PRIC;
@@ -65,18 +68,31 @@ public class GenerateBill extends javax.swing.JFrame
         list_product_individual_name = new DefaultListModel<>();
         making_charges_amount.setText("0");
         
+            
         // Get rates from DB and calculate  
         try
         {
-            // GENERATING INVOICE NUMBER
+            Connection con= ConnectionProvider.getCon();
+              
             long millis=System.currentTimeMillis();       
             // creating a new object of the class Date  
             java.sql.Date date = new java.sql.Date(millis);
-            bill_counter_for_the_invoice+=1;
-            invoice_number.setText("KJ-"+String.valueOf(date)+String.valueOf(bill_counter_for_the_invoice));
-                   
             
-            Connection con= ConnectionProvider.getCon();
+            
+            // GETTING COUNTER OF INVOICE
+            PreparedStatement countCheck= con.prepareStatement("Select * from invoice_counter", rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);
+            rs=countCheck.executeQuery();
+            rs.next();
+            int count=rs.getInt("count");
+        
+            
+            // GENERATING INVOICE NUMBER
+            
+            bill_counter_for_the_invoice=count+1;
+            invoice_number.setText("KJ-"+String.valueOf(date)+"-"+String.valueOf(bill_counter_for_the_invoice));
+          
+            
+            
             PreparedStatement ps = con.prepareStatement("Select prices from jewellery_product_rates where product_name='GOLD_24K'", rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);          
             rs=ps.executeQuery(); 
             rs.first();
@@ -111,7 +127,7 @@ public class GenerateBill extends javax.swing.JFrame
             
             }
             
-            PreparedStatement config_purity_selected= con.prepareStatement("Select product_name  from jewellery_product_rates", rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);
+            PreparedStatement config_purity_selected= con.prepareStatement("Select product_name from jewellery_product_rates", rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);
             rs=config_purity_selected.executeQuery();
             
             while(rs.next())
@@ -151,7 +167,6 @@ public class GenerateBill extends javax.swing.JFrame
         add_selected_prod_for_billing = new javax.swing.JButton();
         purity_selected = new javax.swing.JComboBox<>();
         grasm_weight_of_selected_product = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         making_charges_amount = new javax.swing.JTextField();
@@ -226,10 +241,6 @@ public class GenerateBill extends javax.swing.JFrame
 
         grasm_weight_of_selected_product.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
 
-        jLabel3.setBackground(new java.awt.Color(102, 102, 102));
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel3.setText("Purity");
-
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Lucida Console", 1, 60)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(9, 52, 70));
@@ -256,11 +267,11 @@ public class GenerateBill extends javax.swing.JFrame
 
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
 
-        list1.setBackground(new java.awt.Color(0, 0, 0));
+        list1.setBackground(new java.awt.Color(8, 40, 75));
         list1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         list1.setForeground(new java.awt.Color(255, 255, 255));
 
-        list2.setBackground(new java.awt.Color(0, 0, 0));
+        list2.setBackground(new java.awt.Color(8, 40, 75));
         list2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         list2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -269,11 +280,10 @@ public class GenerateBill extends javax.swing.JFrame
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +320,7 @@ public class GenerateBill extends javax.swing.JFrame
         });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setText("GST");
+        jLabel9.setText("GST [ 3% ]");
 
         Reset_bill.setBackground(new java.awt.Color(0, 119, 182));
         Reset_bill.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -364,6 +374,11 @@ public class GenerateBill extends javax.swing.JFrame
 
         invoice_number.setEditable(false);
         invoice_number.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        invoice_number.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invoice_numberActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-64.png"))); // NOI18N
@@ -382,22 +397,21 @@ public class GenerateBill extends javax.swing.JFrame
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jLabel12)
                         .addGap(31, 31, 31)
-                        .addComponent(invoice_number, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(invoice_number, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(purity_selected, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(selected_product_for_billing, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -437,7 +451,6 @@ public class GenerateBill extends javax.swing.JFrame
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(total_amount_before_GST, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel11)
@@ -445,7 +458,8 @@ public class GenerateBill extends javax.swing.JFrame
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(CUSTOMER_NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(customer_mobile, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(customer_mobile, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(350, 350, 350)
@@ -480,8 +494,7 @@ public class GenerateBill extends javax.swing.JFrame
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(purity_selected, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(selected_product_for_billing, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(grasm_weight_of_selected_product)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(grasm_weight_of_selected_product))
                                 .addGap(400, 400, 400))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(add_selected_prod_for_billing, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -548,7 +561,7 @@ public class GenerateBill extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(1, 1, 1)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1629, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1639, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -574,8 +587,8 @@ public class GenerateBill extends javax.swing.JFrame
 
     private void print_invoice_generate_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_print_invoice_generate_pdfActionPerformed
 
-       
-    
+if (!CUSTOMER_NAME.getText().equals("") && !customer_mobile.getText().equals("")  )       
+{    
         final_billing_amount.getText();
         ResultSet rs=null;
          String final_invoice_product_name="";
@@ -608,7 +621,7 @@ public class GenerateBill extends javax.swing.JFrame
         
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
         Date invoice_billing_date_for_db = new Date();  
-        System.out.println(formatter.format(invoice_billing_date_for_db));  
+      //  System.out.println(formatter.format(invoice_billing_date_for_db));  
        // System.out.println(final_invoice_product_name);
       
         try
@@ -625,7 +638,10 @@ public class GenerateBill extends javax.swing.JFrame
         adding_final_invoice.setString(6,customer_mob );
         adding_final_invoice.setFloat(7,gst_on_invoice );       
         adding_final_invoice.executeUpdate();
+        PreparedStatement update_couint= con.prepareStatement("update invoice_counter set count="+bill_counter_for_the_invoice );              
+        update_couint.executeUpdate();        
         JOptionPane.showMessageDialog(null, "SUCCESS...! Invoice Generated with  "+invoice_number_for_bill);
+
         con.close();
         new GenerateBill().setVisible(true);
         
@@ -639,7 +655,11 @@ public class GenerateBill extends javax.swing.JFrame
            e.printStackTrace();
        }
         
-        
+}
+
+else{
+   JOptionPane.showMessageDialog(null, "CUSTOMER MOBILE OR NAME IS MISSING"); 
+}
         
     }//GEN-LAST:event_print_invoice_generate_pdfActionPerformed
 
@@ -675,12 +695,13 @@ public class GenerateBill extends javax.swing.JFrame
 
     private void add_selected_prod_for_billingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_selected_prod_for_billingActionPerformed
                    
-
+        if (!grasm_weight_of_selected_product.getText().equals("") )
+        {
         // GETTING PRODUCT BILLING DETAILS
         String Selected_product_billing=(String) selected_product_for_billing.getSelectedItem();
         
         String Selected_Purity_billing = (String) purity_selected.getSelectedItem();
-        System.out.println("purity value  "+Selected_Purity_billing);
+       // System.out.println("purity value  "+Selected_Purity_billing);
 
         
         float grams_of_selected_product= Float.parseFloat(grasm_weight_of_selected_product.getText());
@@ -710,9 +731,9 @@ public class GenerateBill extends javax.swing.JFrame
         // System.out.println("Final amount "+product_final_amount);
         
         list_product_individual_amount.addElement(String.valueOf(product_final_amount));
-        list2.add(Selected_product_billing+ " "+Selected_Purity_billing+" "+" Weight[gms]-"+grams_of_selected_product+" Billing Rate-"+billing_rate);
+        list2.add(Selected_product_billing+ " "+Selected_Purity_billing+" "+" Weight[gms]-"+grams_of_selected_product+" Billing Rate-"+billing_rate+"\n");
         list_product_individual_name.addElement("Product-"+Selected_product_billing+ " "+"Purity-"+Selected_Purity_billing+" "+" Weight[gms]-"+grams_of_selected_product+" Billing Rate-"+billing_rate);
-        list1.add(String.valueOf(product_final_amount));
+        list1.add(String.valueOf(product_final_amount)+"\n");
     //    final_invoice_product_name+=(String) selected_product_for_billing.getSelectedItem();
 
         float total_cost=0;
@@ -736,6 +757,19 @@ public class GenerateBill extends javax.swing.JFrame
          //  System.out.println(after_GST);
         total_amount_before_GST.setText(Float.toString(total_cost));
         //System.out.println(total_cost);
+        
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please provide weight");
+        }
+        
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_add_selected_prod_for_billingActionPerformed
 
     private void selected_product_for_billingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selected_product_for_billingActionPerformed
@@ -751,6 +785,10 @@ public class GenerateBill extends javax.swing.JFrame
         new GenerateBill().setVisible(true);
         dispose();
     }//GEN-LAST:event_Reset_billActionPerformed
+
+    private void invoice_numberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoice_numberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_invoice_numberActionPerformed
 
     /**
      * @param args the command line arguments
@@ -806,7 +844,6 @@ public class GenerateBill extends javax.swing.JFrame
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

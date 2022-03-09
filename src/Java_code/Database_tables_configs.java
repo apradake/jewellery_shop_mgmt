@@ -59,6 +59,9 @@ public class Database_tables_configs
      
      PreparedStatement productCategeory= con.prepareStatement("create table if not exists jewellery_type_list(product_description varchar(100))");  
      productCategeory.execute();
+    
+     PreparedStatement invoice_counter= con.prepareStatement("create table if not exists invoice_counter(count int)");  
+     invoice_counter.execute();
      
      ResultSet rs = null;
  
@@ -73,7 +76,7 @@ public class Database_tables_configs
             {
             do 
             {
-                 System.out.println("Defaul user exist");
+                 System.out.println("Default user exist");
             }
             while(rs.next());
             
@@ -88,9 +91,9 @@ public class Database_tables_configs
         
         // ADDING DEFAULT GOLD VALUES
         
-         PreparedStatement populatMetal= con.prepareStatement("Select * from jewellery_product_rates where product_name ='GOLD_24K'");
+            PreparedStatement populatMetal= con.prepareStatement("Select * from jewellery_product_rates where product_name ='GOLD_24K'");
         
-         rs=populatMetal.executeQuery();
+             rs=populatMetal.executeQuery();
                 
             if (rs.next()== true)
             {
@@ -112,6 +115,27 @@ public class Database_tables_configs
                
             }
         
+            
+            // SETTING DEFAULT INVOICE COUNTER
+            
+           
+            try
+            {
+            PreparedStatement countCheck= con.prepareStatement("Select * from invoice_counter");
+
+            rs=countCheck.executeQuery();
+            
+            int count=rs.getInt("count");
+            //System.out.println("counter is"+ count);
+            }    
+            catch( Exception e)
+            {
+                
+             PreparedStatement add_counter= con.prepareStatement("insert into invoice_counter values(0)");
+             add_counter.execute();   
+               
+            }
+            
        }
        catch( Exception e)
        {
