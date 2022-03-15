@@ -5,6 +5,7 @@
  */
 package lichadejewellers;
 
+import java.awt.event.KeyEvent;
 import java.net.NetworkInterface;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -70,6 +71,11 @@ public class Login extends javax.swing.JFrame {
         passkey.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 passkeyFocusGained(evt);
+            }
+        });
+        passkey.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passkeyKeyPressed(evt);
             }
         });
 
@@ -240,6 +246,51 @@ public class Login extends javax.swing.JFrame {
 
        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void passkeyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passkeyKeyPressed
+       
+        // HECKING IF ENTER KEY IS PRESSED
+        if (evt.getKeyCode()== KeyEvent.VK_ENTER )
+        {
+            ResultSet rs = null;
+        // MANDATORY FIELDS CHECK
+        if ( username.getText().equals("") || passkey.getText().equals(""))
+        {
+                JOptionPane.showMessageDialog(null, "Details are missing !!! ", " WARNING....", JOptionPane.WARNING_MESSAGE);
+        } 
+        else {
+            try{
+
+                    Connection con= ConnectionProvider.getCon();               
+                    PreparedStatement ps= con.prepareStatement("select * from  app_user where username=" +"'"+username.getText()+"'"+ " and passkey=" +"'"+String.valueOf(passkey.getPassword())+"'");
+                    //System.out.println(ps);
+                    rs=ps.executeQuery();                  
+                     if (rs.next()== true)
+                     {                     
+                        HomePage obj = new HomePage();
+                        obj.setVisible(true);
+                        setVisible(false);
+                        rs.close();
+                        con.close();         
+                    } 
+                     else if (rs.next() == false) 
+                     {
+                        JOptionPane.showMessageDialog(null, "Invalid User Name or Password", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        username.setText(null);
+                        passkey.setText(null);
+                        username.requestFocus();
+                     }
+             }
+            catch (Exception e)
+             {
+                e.printStackTrace();
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, e);
+
+             }        
+        }
+        }   
+    }//GEN-LAST:event_passkeyKeyPressed
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,7 @@
  */
 package lichadejewellers;
 
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
@@ -39,6 +40,8 @@ public class addNewProductToDB extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        making_charges_per_grams = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -92,10 +95,36 @@ public class addNewProductToDB extends javax.swing.JFrame {
             }
         });
 
+        making_charges_per_grams.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        making_charges_per_grams.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                making_charges_per_gramsKeyPressed(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel2.setText("Making  Charges pergram");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(add_new_product_desc, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(making_charges_per_grams, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,24 +132,10 @@ public class addNewProductToDB extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(400, 400, 400))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(jLabel1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(jButton2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(add_new_product_desc, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jLabel7)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
+                        .addGap(380, 380, 380))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,11 +148,15 @@ public class addNewProductToDB extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(add_new_product_desc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(making_charges_per_grams, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(27, 27, 27)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(35, 35, 35)
                 .addComponent(jButton2)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,26 +178,78 @@ public class addNewProductToDB extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String new_product_name=add_new_product_desc.getText();
-       try{
-       Connection con= ConnectionProvider.getCon();
-       String new_product_name_mod="("+"'"+new_product_name+"'"+")";
-       PreparedStatement new_prod_add= con.prepareStatement("insert into jewellery_type_list values"+new_product_name_mod );              
-       new_prod_add.executeUpdate();
-       JOptionPane.showMessageDialog(null, "SUCCESS...! PRODUCT ADDED ");
-       add_new_product_desc.setText("");
+
+        if (!add_new_product_desc.getText().equals("") && !making_charges_per_grams.getText().equals(""))
+       {        
+                    String new_product_name=add_new_product_desc.getText();
+                    try{
+                    Connection con= ConnectionProvider.getCon();
+                    float making_charges= Float.parseFloat(making_charges_per_grams.getText());
+                    PreparedStatement new_prod_add= con.prepareStatement("insert into jewellery_type_list(product_description,making_charge_per_gm) values(?,?)");              
+                    new_prod_add.setString(1, new_product_name);
+                    new_prod_add.setFloat(2, making_charges);
+
+                    new_prod_add.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "SUCCESS...! PRODUCT ADDED ");
+                    add_new_product_desc.setText(""); making_charges_per_grams.setText("");
+
+                    }
+                    catch(Exception e)
+                    {
+                        JOptionPane.showMessageDialog(null, "ERROR.!! PRODUCT ADD FAILED");
+                        e.printStackTrace();
+                    }
        
-       }
-       catch(Exception e)
-       {
-           JOptionPane.showMessageDialog(null, "ERROR.!! PRODUCT ADD FAILED");
-           e.printStackTrace();
-       }
+                    }
+        
+        else
+           {
+                     JOptionPane.showMessageDialog(null, "DETAILS MISSING"); 
+           }
+                     
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void add_new_product_descActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_new_product_descActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_add_new_product_descActionPerformed
+
+    private void making_charges_per_gramsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_making_charges_per_gramsKeyPressed
+       
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+                    if (!add_new_product_desc.getText().equals("") && !making_charges_per_grams.getText().equals(""))
+                    {     
+                         String new_product_name=add_new_product_desc.getText();
+                    try{
+                    Connection con= ConnectionProvider.getCon();
+                    float making_charges= Float.parseFloat(making_charges_per_grams.getText());
+                    PreparedStatement new_prod_add= con.prepareStatement("insert into jewellery_type_list(product_description,making_charge_per_gm) values(?,?)");              
+                    new_prod_add.setString(1, new_product_name);
+                    new_prod_add.setFloat(2, making_charges);
+
+                    new_prod_add.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "SUCCESS...! PRODUCT ADDED ");
+                    add_new_product_desc.setText(""); making_charges_per_grams.setText("");
+
+                    }
+                    catch(Exception e)
+                    {
+                        JOptionPane.showMessageDialog(null, "ERROR.!! PRODUCT ADD FAILED");
+                        e.printStackTrace();
+                    }
+
+
+                    } 
+                    
+                    else
+                    {
+                       JOptionPane.showMessageDialog(null, "DETAILS MISSING"); 
+                    }
+                    
+        }
+        
+    }//GEN-LAST:event_making_charges_per_gramsKeyPressed
 
     /**
      * @param args the command line arguments
@@ -220,8 +291,10 @@ public class addNewProductToDB extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField making_charges_per_grams;
     // End of variables declaration//GEN-END:variables
 }

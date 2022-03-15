@@ -43,7 +43,7 @@ public class AdvancedDb2ExcelExporter {
     {
        
  
-        String excelFilePath = "dist\\Revenue_"+getFileName(table.concat("_Export"));
+        String excelFilePath = "Invoice_report\\Revenue_"+getFileName(table.concat("_Export"));
  
         try {
             Connection cons= ConnectionProvider.getCon();
@@ -82,7 +82,7 @@ public class AdvancedDb2ExcelExporter {
     {
        
  
-        String excelFilePath = "dist\\GST_"+getFileName(table.concat("_Export"));
+        String excelFilePath = "GST_report\\GST_"+getFileName(table.concat("_Export"));
  
         try {
             Connection cons= ConnectionProvider.getCon();
