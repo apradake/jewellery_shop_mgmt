@@ -87,7 +87,7 @@ public class AdvancedDb2ExcelExporter {
         try {
             Connection cons= ConnectionProvider.getCon();
             
-            String sql = "select sum(invoice_bill_amount), sum(invoice_gst_paid) from ".concat(table)+ " where invoice_billing_date between "+"'"+from_date+"'"+" and "+"'"+to_date+"'"; 
+            String sql = "select sum(invoice_bill_amount), sum(invoice_gst_paid) from ".concat(table)+ " where invoice_billing_date between "+"'"+from_date+"'"+" and "+"'"+to_date+"'"+ "and bill_status!='RETURNED'"; 
  
          //   System.out.println(sql);
             Statement statement = cons.createStatement();

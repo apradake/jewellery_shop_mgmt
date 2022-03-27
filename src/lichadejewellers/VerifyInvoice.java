@@ -43,6 +43,8 @@ public class VerifyInvoice extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         invoice_num = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,7 +69,7 @@ public class VerifyInvoice extends javax.swing.JFrame {
             .addGap(0, 8, Short.MAX_VALUE)
         );
 
-        verify_invoice.setBackground(new java.awt.Color(8, 40, 75));
+        verify_invoice.setBackground(new java.awt.Color(0, 119, 182));
         verify_invoice.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         verify_invoice.setForeground(new java.awt.Color(255, 255, 255));
         verify_invoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-approval-48.png"))); // NOI18N
@@ -127,13 +129,27 @@ public class VerifyInvoice extends javax.swing.JFrame {
         invoice_num.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-64_1.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-64.png"))); // NOI18N
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 3, true));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jButton2.setBackground(new java.awt.Color(0, 119, 182));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-remove-48.png"))); // NOI18N
+        jButton2.setText("Mark Returned");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Product of GAMA CONSULTING");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -149,14 +165,21 @@ public class VerifyInvoice extends javax.swing.JFrame {
                         .addGap(94, 94, 94)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(invoice_num, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(invoice_num, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(76, 76, 76)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(verify_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButton1))
+                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(verify_invoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 352, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(541, 541, 541)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -177,9 +200,13 @@ public class VerifyInvoice extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(verify_invoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(invoice_num))
-                        .addGap(46, 46, 46)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
                         .addComponent(jButton1)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -224,9 +251,10 @@ public class VerifyInvoice extends javax.swing.JFrame {
                 String gst_paid=rs.getString("invoice_gst_paid");
                 float inv_amt= rs.getFloat("invoice_bill_amount");
                 
+                String inv_statu=rs.getString("bill_status");
                 /**Printing data in TextArea1 */
                 jTextArea1.setText("Name : "+cust_name+"\n"+"Products : "+inv_prod_list+"\n"+"Billing time : "+timestamp+"\n"+
-                        "GST  : "+gst_paid+"\n"+"Bill Amt : "+inv_amt+"\n"+"Invoice No : "+invoice);
+                        "GST  : "+gst_paid+"\n"+"Bill Amt : "+inv_amt+"\n"+"Invoice No : "+invoice+"\n"+"Bill Status : "+inv_statu);
                 
             }
             while(rs.next());
@@ -250,6 +278,43 @@ public class VerifyInvoice extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        new HomePage().setVisible(true); dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       
+        String invoice_num= "'"+this.invoice_num.getText()+"'";    
+        ResultSet rs = null;
+ 
+        // Try block to catch exception/s
+        try
+        {
+            Connection con= ConnectionProvider.getCon();
+            PreparedStatement ps= con.prepareStatement("Select * from final_invoice where invoice_number ="+ invoice_num,  rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);
+
+            rs=ps.executeQuery();
+                
+            if (rs.next()== true)
+            {
+            do 
+            {
+              PreparedStatement mark_cancel= con.prepareStatement("update final_invoice set bill_status='RETURNED' where invoice_number ="+ invoice_num,  rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);
+
+              mark_cancel.executeUpdate();
+              JOptionPane.showMessageDialog(null, "INVOICE MARKED AS RETURNED/CANCELLED");  
+            }
+            while(rs.next());
+            
+            } 
+            else if (rs.next() == false) 
+            {
+               JOptionPane.showMessageDialog(null, "INVOICE DOES NOT EXIST");
+             //  JOptionPane. ( "WRONG INVOICE");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,8 +354,10 @@ public class VerifyInvoice extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField invoice_num;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
